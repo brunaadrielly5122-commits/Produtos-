@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>CRUD Produtos</title>
+</head>
+<body>
+
+<h2>CRUD de Produtos</h2>
+
+<input id="nome" placeholder="Nome do produto">
+<input id="preco" placeholder="Preço" type="number">
+<button onclick="adicionar()">Adicionar</button>
+
+<ul id="lista"></ul>
+
+<script>
+var produtos = [];
+
+function atualizarTela() {
+  var lista = document.getElementById("lista");
+  lista.innerHTML = "";
+
+  for (var i = 0; i < produtos.length; i++) {
+    lista.innerHTML += 
+      "<li>" + produtos[i].nome + " - R$" + produtos[i].preco +
+      " <button onclick='editar(" + i + ")'>Editar</button>" +
+      " <button onclick='deletar(" + i + ")'>Excluir</button></li>";
+  }
+}
+
+function adicionar() {
+  var nome = document.getElementById("nome").value;
+  var preco = document.getElementById("preco").value;
+
+  if (nome === "" || preco === "") {
+    alert("Preencha tudo!");
+    return;
+  }
+
+  produtos.push({ nome: nome, preco: preco });
+
+  document.getElementById("nome").value = "";
+  document.getElementById("preco").value = "";
+
+  atualizarTela();
+}
+
+function deletar(i) {
+  produtos.splice(i, 1);
+  atualizarTela();
+}
+
+function editar(i) {
+  var novoNome = prompt("Novo nome:", produtos[i].nome);
+  var novoPreco = prompt("Novo preço:", produtos[i].preco);
+
+  if (novoNome !== null && novoPreco !== null) {
+    produtos[i].nome = novoNome;
+    produtos[i].preco = novoPreco;
+    atualizarTela();
+  }
+}
+
+atualizarTela();
+</script>
+
+</body>
+</html>
